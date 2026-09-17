@@ -45,7 +45,7 @@
       </select>
       <input type="date" name="from" value="{{ request('from') }}" class="filter-chip" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border-light);font-size:0.75rem;">
       <input type="date" name="to" value="{{ request('to') }}" class="filter-chip" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border-light);font-size:0.75rem;">
-      <button class="btn-sm primary" type="submit"><i data-lucide="funnel"></i> Filter</button>
+      <button class="btn-sm primary" type="submit"><i data-lucide="filter"></i> Filter</button>
       <a href="{{ route('expenses.index') }}" class="btn-sm"><i data-lucide="rotate-ccw"></i> Reset</a>
     </form>
   </section>
@@ -67,20 +67,26 @@
                 <td class="muted small">{{ $e->createdBy?->name }}</td>
                 <td><span class="status-pill-sm {{ $e->approval_status === 'approved' ? 'online' : ($e->approval_status === 'rejected' ? 'warning' : 'neutral') }}">{{ $e->approval_status }}</span></td>
                 <td class="center">
-                  @can('expense.approve')
-                    @if ($e->approval_status === 'pending')
-                      <form method="POST" action="{{ route('expenses.approve', $e) }}" style="display:inline;" onsubmit="return confirm('Approve this expense?')">
-                        @csrf
-                        <input type="hidden" name="approval_status" value="approved">
-                        <button class="btn-sm success" title="Approve"><i data-lucide="check"></i></button>
-                      </form>
-                      <form method="POST" action="{{ route('expenses.approve', $e) }}" style="display:inline;" onsubmit="return confirm('Reject this expense?')">
-                        @csrf
-                        <input type="hidden" name="approval_status" value="rejected">
-                        <button class="btn-sm danger" title="Reject"><i data-lucide="x"></i></button>
-                      </form>
-                    @endif
-                  @endcan
+                  <div class="action-links">
+                    @can('expense.approve')
+                      @if ($e->approval_status === 'pending')
+                        <form method="POST" action="{{ route('expenses.approve', $e) }}" style="display:inline;" data-turbo="false"
+                              data-confirm="Approve this expense?" data-confirm-title="Approve expense" data-confirm-ok="Approve" data-confirm-icon="check">
+                          @csrf
+                          <input type="hidden" name="approval_status" value="approved">
+                          <button class="icon-btn success" type="submit" title="Approve"><i data-lucide="check"></i></button>
+                        </form>
+                        <form method="POST" action="{{ route('expenses.approve', $e) }}" style="display:inline;" data-turbo="false"
+                              data-confirm="Reject this expense?" data-confirm-title="Reject expense" data-confirm-ok="Reject" data-confirm-icon="ban" data-confirm-danger>
+                          @csrf
+                          <input type="hidden" name="approval_status" value="rejected">
+                          <button class="icon-btn danger" type="submit" title="Reject"><i data-lucide="ban"></i></button>
+                        </form>
+                      @else
+                        <span class="muted small">—</span>
+                      @endif
+                    @endcan
+                  </div>
                 </td>
               </tr>
             @empty

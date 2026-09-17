@@ -26,7 +26,7 @@
           <option value="{{ $status }}" {{ request('status') === $status ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
         @endforeach
       </select>
-      <button class="btn-sm primary" type="submit"><i data-lucide="funnel"></i> Filter</button>
+      <button class="btn-sm primary" type="submit"><i data-lucide="filter"></i> Filter</button>
       <a href="{{ route('stations.index') }}" class="btn-sm"><i data-lucide="rotate-ccw"></i> Reset</a>
     </form>
   </section>

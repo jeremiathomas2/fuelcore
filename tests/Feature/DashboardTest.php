@@ -35,13 +35,30 @@ class DashboardTest extends TestCase
             ->assertOk();
     }
 
-    public function test_dashboard_is_filterable_by_station(): void
+    public function test_dashboard_is_filterable_by_an_encrypted_station_token(): void
     {
         $user = User::where('email', 'super@fuelcore.test')->first();
         $station = \App\Models\Station::first();
 
+        $token = url_id($station->id);
+
+        $this->assertIsString($token);
+        $this->assertNotSame((string) $station->id, $token);
+        $this->assertSame($station->id, \App\Support\UrlId::decode($token));
+
         $this->actingAs($user)
-            ->get(route('dashboard', ['station' => $station->id]))
-            ->assertOk();
+            ->get(route('dashboard', ['station' => $token]))
+            ->assertOk()
+            ->assertViewHas('selectedStation', fn ($selected) => $selected?->id === $station->id);
+    }
+
+    public function test_dashboard_rejects_a_tampered_station_token(): void
+    {
+        $user = User::where('email', 'super@fuelcore.test')->first();
+
+        $this->actingAs($user)
+            ->get(route('dashboard', ['station' => 'not-a-real-token']))
+            ->assertOk()
+            ->assertViewHas('selectedStation', null);
     }
 }

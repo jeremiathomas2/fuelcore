@@ -32,8 +32,8 @@ class PanelStateTest extends TestCase
     public function test_cookie_restores_collapsed_sidebar_and_closed_panel(): void
     {
         $this->actingAs($this->superAdmin())
-            ->withCookie('fc_sidebar', 'collapsed')
-            ->withCookie('fc_right_panel', '0')
+            ->withUnencryptedCookie('fc_sidebar', 'collapsed')
+            ->withUnencryptedCookie('fc_right_panel', '0')
             ->get(route('dashboard'))
             ->assertOk()
             ->assertSee('class="sidebar collapsed"', false)
@@ -43,8 +43,8 @@ class PanelStateTest extends TestCase
     public function test_cookie_expands_sidebar_and_opens_panel(): void
     {
         $this->actingAs($this->superAdmin())
-            ->withCookie('fc_sidebar', 'expanded')
-            ->withCookie('fc_right_panel', '1')
+            ->withUnencryptedCookie('fc_sidebar', 'expanded')
+            ->withUnencryptedCookie('fc_right_panel', '1')
             ->get(route('dashboard'))
             ->assertOk()
             ->assertSee('class="sidebar"', false)

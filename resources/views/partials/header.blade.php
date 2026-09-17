@@ -103,7 +103,7 @@
             @php $d = $notif->data; @endphp
             <div class="notification-item" data-notif-id="{{ $notif->id }}" role="button" tabindex="0">
               <div class="alert-icon {{ ($d['severity'] ?? 'info') === 'critical' ? 'critical' : (($d['severity'] ?? 'info') === 'warning' ? 'warning' : 'info') }}" style="width:28px;height:28px;">
-                <i data-lucide="{{ ($d['severity'] ?? 'info') === 'critical' ? 'alert-triangle' : 'check-circle' }}" style="width:13px;height:13px;"></i>
+                <i data-lucide="{{ ($d['severity'] ?? 'info') === 'critical' ? 'triangle-alert' : 'circle-check' }}" style="width:13px;height:13px;"></i>
               </div>
               <div>
                 <div style="font-size:0.74rem;font-weight:700;color:var(--text-dark);">{{ $d['title'] ?? 'Notification' }}</div>
@@ -121,7 +121,7 @@
     </div>
 
     <button class="header-icon-btn" aria-label="Help" style="opacity:0.45;">
-      <i data-lucide="help-circle" style="width:18px;height:18px;"></i>
+      <i data-lucide="circle-help" style="width:18px;height:18px;"></i>
     </button>
 
     <div class="header-divider"></div>

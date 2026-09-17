@@ -1,13 +1,13 @@
 @if (session('success'))
     <div class="alert-box alert-success">
-        <i data-lucide="check-circle"></i>
+        <i data-lucide="circle-check"></i>
         <div>{{ session('success') }}</div>
     </div>
 @endif
 
 @if (session('error'))
     <div class="alert-box alert-error">
-        <i data-lucide="alert-triangle"></i>
+        <i data-lucide="triangle-alert"></i>
         <div>{{ session('error') }}</div>
     </div>
 @endif
@@ -25,7 +25,7 @@
     @endphp
     @if ($visible->isNotEmpty())
         <div class="alert-box alert-error">
-            <i data-lucide="alert-triangle"></i>
+            <i data-lucide="triangle-alert"></i>
             <div>
                 <strong>Please fix the following:</strong>
                 <ul style="margin:6px 0 0 16px;padding:0;">

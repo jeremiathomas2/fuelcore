@@ -21,10 +21,10 @@
       <select name="station" class="filter-chip" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border-light);font-family:inherit;font-size:0.75rem;">
         <option value="">All Stations</option>
         @foreach ($stations as $st)
-          <option value="{{ $st->id }}" {{ $selectedStation?->id === $st->id ? 'selected' : '' }}>{{ $st->name }}</option>
+          <option value="{{ url_id($st->id) }}" {{ $selectedStation?->id === $st->id ? 'selected' : '' }}>{{ $st->name }}</option>
         @endforeach
       </select>
-      <button type="submit" class="btn-sm primary"><i data-lucide="funnel"></i> Filter</button>
+      <button type="submit" class="btn-sm primary"><i data-lucide="filter"></i> Filter</button>
     </form>
   </section>
 
@@ -46,7 +46,7 @@
     (() => {
       const KEY = '__fcInit_live';
       if (window[KEY]) document.removeEventListener('turbo:load', window[KEY]);
-      const LIVE_URL = '{{ route('live.data', ['station' => $selectedStation?->id ?? '']) }}';
+      const LIVE_URL = '{{ route('live.data', ['station' => url_id($selectedStation?->id) ?? '']) }}';
       const TSh = '{{ currency() }}';
       const statusBadge = (s) => {
         const cls = s === 'dispensing' ? 'dispensing' : ['idle','completed'].includes(s) ? 'online' : 'warning';

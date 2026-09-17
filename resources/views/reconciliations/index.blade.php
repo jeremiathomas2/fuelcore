@@ -43,7 +43,7 @@
           <input class="form-control" type="date" name="to" value="{{ old('to') }}">
         </div>
       </div>
-      @error('error')<div class="alert-box alert-error" style="margin-top:12px;"><i data-lucide="alert-triangle"></i><div>{{ $message }}</div></div>@enderror
+      @error('error')<div class="alert-box alert-error" style="margin-top:12px;"><i data-lucide="triangle-alert"></i><div>{{ $message }}</div></div>@enderror
     </div>
     <div class="card-footer">
       <button type="submit" class="btn btn-primary"><i data-lucide="play"></i> Run Reconciliation</button>
@@ -64,7 +64,7 @@
           <option value="{{ $s }}" {{ request('status') === $s ? 'selected' : '' }}>{{ ucfirst(str_replace('_', ' ', $s)) }}</option>
         @endforeach
       </select>
-      <button class="btn-sm primary" type="submit"><i data-lucide="funnel"></i> Filter</button>
+      <button class="btn-sm primary" type="submit"><i data-lucide="filter"></i> Filter</button>
       <a href="{{ route('reconciliations.index') }}" class="btn-sm"><i data-lucide="rotate-ccw"></i> Reset</a>
     </form>
   </section>

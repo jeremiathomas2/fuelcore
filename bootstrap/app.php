@@ -20,6 +20,12 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->throttleApi('60,1');
+
+        /* UI state cookies are written by JavaScript in plain text, so they
+           must be excluded from cookie encryption or the framework discards
+           them (EncryptCookies nulls undecryptable values), which caused the
+           sidebar / right panel to flash on every navigation. */
+        $middleware->encryptCookies(except: ['fc_sidebar', 'fc_right_panel']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

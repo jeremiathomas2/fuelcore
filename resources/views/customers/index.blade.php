@@ -31,7 +31,7 @@
           <option value="{{ $s }}" {{ request('status') === $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
         @endforeach
       </select>
-      <button class="btn-sm primary" type="submit"><i data-lucide="funnel"></i> Filter</button>
+      <button class="btn-sm primary" type="submit"><i data-lucide="filter"></i> Filter</button>
       <a href="{{ route('customers.index') }}" class="btn-sm"><i data-lucide="rotate-ccw"></i> Reset</a>
     </form>
   </section>
@@ -54,9 +54,9 @@
                 <td><span class="status-pill-sm {{ $c->status === 'active' ? 'online' : 'warning' }}">{{ $c->status }}</span></td>
                 <td class="center">
                   <div class="action-links">
-                    <a href="{{ route('customers.show', $c) }}" title="View"><i data-lucide="eye"></i></a>
+                    <a href="{{ route('customers.show', $c) }}" class="icon-btn" title="View customer" onclick="event.stopPropagation()"><i data-lucide="eye"></i></a>
                     @can('customer.manage')
-                      <a href="{{ route('customers.edit', $c) }}" title="Edit"><i data-lucide="pencil"></i></a>
+                      <a href="{{ route('customers.edit', $c) }}" class="icon-btn" title="Edit customer" onclick="event.stopPropagation()"><i data-lucide="square-pen"></i></a>
                       @include('partials.toggle-status', [
                         'action' => route('customers.toggleStatus', $c),
                         'active' => $c->status === 'active',

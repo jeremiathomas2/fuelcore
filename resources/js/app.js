@@ -171,7 +171,7 @@ function renderNotifItems(items) {
   }
   notifList.innerHTML = items.map((n) => {
     const sev = ['critical', 'warning', 'info'].includes(n.severity) ? n.severity : 'info';
-    const icon = sev === 'critical' ? 'alert-triangle' : 'check-circle';
+    const icon = sev === 'critical' ? 'triangle-alert' : 'circle-check';
     return `<div class="notification-item" data-notif-id="${escapeNotifText(n.id)}" role="button" tabindex="0">
       <div class="alert-icon ${sev}" style="width:28px;height:28px;"><i data-lucide="${icon}" style="width:13px;height:13px;"></i></div>
       <div>
@@ -289,7 +289,7 @@ function showToast(message, type = 'success') {
   if (!container) return;
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  const icon = type === 'success' ? 'check-circle' : type === 'error' ? 'alert-triangle' : 'help-circle';
+  const icon = type === 'success' ? 'circle-check' : type === 'error' ? 'triangle-alert' : 'circle-help';
   toast.innerHTML = `<i data-lucide="${icon}" style="width:16px;height:16px;flex-shrink:0;"></i><span>${message}</span>`;
   container.appendChild(toast);
   renderIcons();

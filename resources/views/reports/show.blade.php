@@ -41,7 +41,7 @@
           @endforeach
         </select>
       </div>
-      <button class="btn-sm primary" type="submit" style="margin-top:18px;"><i data-lucide="funnel"></i> Apply</button>
+      <button class="btn-sm primary" type="submit" style="margin-top:18px;"><i data-lucide="filter"></i> Apply</button>
     </form>
   </section>
 

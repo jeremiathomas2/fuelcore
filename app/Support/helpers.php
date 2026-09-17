@@ -1,6 +1,14 @@
 <?php
 
 use App\Models\SystemSetting;
+use App\Support\UrlId;
+
+if (! function_exists('url_id')) {
+    function url_id(int|string|null $id): ?string
+    {
+        return UrlId::encode($id);
+    }
+}
 
 if (! function_exists('options')) {
     function options(string $key, mixed $default = null): mixed

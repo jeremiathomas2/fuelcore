@@ -118,7 +118,7 @@
 
     <div class="kpi-card">
       <div class="kpi-header">
-        <div class="kpi-icon red"><i data-lucide="alert-triangle"></i></div>
+        <div class="kpi-icon red"><i data-lucide="triangle-alert"></i></div>
         <span class="kpi-trend down">{{ $criticalAlerts }} critical</span>
       </div>
       <div class="kpi-value">{{ $activeAlerts }}</div>
@@ -133,10 +133,10 @@
       <select name="station" class="filter-chip" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border-light);font-family:inherit;font-size:0.75rem;color:var(--text-dark);cursor:pointer;">
         <option value="">All Stations</option>
         @foreach ($stations as $st)
-          <option value="{{ $st->id }}" {{ $selectedStation?->id === $st->id ? 'selected' : '' }}>{{ $st->name }}</option>
+          <option value="{{ url_id($st->id) }}" {{ $selectedStation?->id === $st->id ? 'selected' : '' }}>{{ $st->name }}</option>
         @endforeach
       </select>
-      <button type="submit" class="btn-sm primary"><i data-lucide="funnel"></i> Filter</button>
+      <button type="submit" class="btn-sm primary"><i data-lucide="filter"></i> Filter</button>
       <a href="{{ route('dashboard') }}" class="btn-sm"><i data-lucide="rotate-ccw"></i> Reset</a>
     </form>
   </section>
@@ -253,7 +253,7 @@
     </div>
     <div class="card">
       <div class="card-header">
-        <h3><i data-lucide="bar-chart-3"></i> Top Stations by Revenue</h3>
+        <h3><i data-lucide="chart-column"></i> Top Stations by Revenue</h3>
       </div>
       <div class="card-body">
         <div class="chart-container" style="height:260px;">

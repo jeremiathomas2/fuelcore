@@ -22,7 +22,7 @@
     <form action="{{ route('pos') }}" method="GET" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0;">
       <select name="station" class="filter-chip" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border-light);font-family:inherit;font-size:0.75rem;">
         @foreach ($stations as $st)
-          <option value="{{ $st->id }}" {{ $station?->id === $st->id ? 'selected' : '' }}>{{ $st->name }}</option>
+          <option value="{{ url_id($st->id) }}" {{ $station?->id === $st->id ? 'selected' : '' }}>{{ $st->name }}</option>
         @endforeach
       </select>
       <button type="submit" class="btn-sm primary"><i data-lucide="check"></i> Select</button>
@@ -159,7 +159,7 @@
     </form>
 
     @error('error')
-      <div class="alert-box alert-error" style="margin-top:16px;"><i data-lucide="alert-triangle"></i><div>{{ $message }}</div></div>
+      <div class="alert-box alert-error" style="margin-top:16px;"><i data-lucide="triangle-alert"></i><div>{{ $message }}</div></div>
     @enderror
   @endif
 @endsection

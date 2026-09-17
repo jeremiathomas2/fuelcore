@@ -31,7 +31,7 @@
       <div class="kpi-label">Ordered</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-header"><div class="kpi-icon green"><i data-lucide="check-circle"></i></div></div>
+      <div class="kpi-header"><div class="kpi-icon green"><i data-lucide="circle-check"></i></div></div>
       <div class="kpi-value">{{ $delivery->delivered_qty !== null ? number_format((float) $delivery->delivered_qty, 0).' L' : '—' }}</div>
       <div class="kpi-label">Delivered</div>
     </div>

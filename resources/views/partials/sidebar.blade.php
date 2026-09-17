@@ -56,7 +56,7 @@
         <i data-lucide="package"></i><span class="label">Fuel Inventory</span>
       </a>
       <a class="nav-item{{ $icon('deliveries', '') }}" data-nav-key="deliveries" href="{{ route('deliveries.index') }}">
-        <i data-lucide="truck-icon"></i><span class="label">Deliveries</span>
+        <i data-lucide="forklift"></i><span class="label">Deliveries</span>
       </a>
       <a class="nav-item{{ $icon('tanks', '') }}" data-nav-key="tanks" href="{{ route('tanks.index') }}">
         <i data-lucide="database"></i><span class="label">Tank Monitoring</span>
@@ -78,7 +78,7 @@
         <i data-lucide="scale"></i><span class="label">Cash Reconciliation</span>
       </a>
       <a class="nav-item{{ $icon('reports', '') }}" data-nav-key="reports" href="{{ route('reports.index') }}">
-        <i data-lucide="bar-chart-3"></i><span class="label">Financial Reports</span>
+        <i data-lucide="chart-column"></i><span class="label">Financial Reports</span>
       </a>
     </div>
 

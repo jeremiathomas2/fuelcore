@@ -30,7 +30,7 @@
           <option value="{{ $s }}" {{ request('status') === $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
         @endforeach
       </select>
-      <button class="btn-sm primary" type="submit"><i data-lucide="funnel"></i> Filter</button>
+      <button class="btn-sm primary" type="submit"><i data-lucide="filter"></i> Filter</button>
       <a href="{{ route('shifts.index') }}" class="btn-sm"><i data-lucide="rotate-ccw"></i> Reset</a>
     </form>
   </section>

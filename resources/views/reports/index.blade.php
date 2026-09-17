@@ -14,7 +14,7 @@
       <a href="{{ route('reports.show', $slug) }}" class="kpi-card" style="text-decoration:none;cursor:pointer;">
         <div class="kpi-header">
           <div class="kpi-icon blue">
-            <i data-lucide="{{ in_array($slug, ['inventory', 'reconciliation']) ? 'package' : (str_contains($slug, 'expense') ? 'wallet' : (str_contains($slug, 'customer') ? 'users' : (str_contains($slug, 'shift') ? 'clock' : (str_contains($slug, 'delivery') ? 'truck' : 'bar-chart-2')))) }}"></i>
+            <i data-lucide="{{ in_array($slug, ['inventory', 'reconciliation']) ? 'package' : (str_contains($slug, 'expense') ? 'wallet' : (str_contains($slug, 'customer') ? 'users' : (str_contains($slug, 'shift') ? 'clock' : (str_contains($slug, 'delivery') ? 'truck' : 'chart-column')))) }}"></i>
           </div>
         </div>
         <div class="kpi-value" style="font-size:1.1rem;">{{ $meta['title'] }}</div>

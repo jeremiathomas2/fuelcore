@@ -16,7 +16,7 @@
 
   <section class="kpi-grid" style="margin-bottom:24px;">
     @php($tone = ['critical' => 'red', 'warning' => 'amber', 'info' => 'blue'])
-    @php($icon = ['critical' => 'alert-octagon', 'warning' => 'alert-triangle', 'info' => 'info'])
+    @php($icon = ['critical' => 'octagon-alert', 'warning' => 'triangle-alert', 'info' => 'info'])
     @foreach (['critical', 'warning', 'info'] as $sev)
       <div class="kpi-card">
         <div class="kpi-header"><div class="kpi-icon {{ $tone[$sev] }}"><i data-lucide="{{ $icon[$sev] }}"></i></div></div>
@@ -43,7 +43,7 @@
       <label class="filter-chip" style="display:flex;gap:6px;align-items:center;padding:7px 12px;border-radius:8px;border:1px solid var(--border-light);font-size:0.75rem;">
         <input type="checkbox" name="resolved" value="1" {{ request('resolved') ? 'checked' : '' }}> Show resolved
       </label>
-      <button class="btn-sm primary" type="submit"><i data-lucide="funnel"></i> Filter</button>
+      <button class="btn-sm primary" type="submit"><i data-lucide="filter"></i> Filter</button>
     </form>
   </section>
 
@@ -78,7 +78,7 @@
                 </td>
               </tr>
             @empty
-              <tr><td colspan="7"><div class="empty-state"><i data-lucide="check-circle"></i> No alerts. All clear.</div></td></tr>
+              <tr><td colspan="7"><div class="empty-state"><i data-lucide="circle-check"></i> No alerts. All clear.</div></td></tr>
             @endforelse
           </tbody>
         </table>

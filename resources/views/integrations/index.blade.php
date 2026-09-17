@@ -15,7 +15,7 @@
     @php($sTone = ['processed' => 'online', 'failed' => 'error', 'pending' => 'warning', 'duplicate' => 'info'])
     @foreach (['processed', 'failed', 'pending', 'duplicate'] as $st)
       <div class="kpi-card">
-        <div class="kpi-header"><div class="kpi-icon {{ $sTone[$st] }}"><i data-lucide="{{ $st === 'processed' ? 'check-circle' : ($st === 'failed' ? 'x-circle' : 'clock') }}"></i></div></div>
+        <div class="kpi-header"><div class="kpi-icon {{ $sTone[$st] }}"><i data-lucide="{{ $st === 'processed' ? 'circle-check' : ($st === 'failed' ? 'circle-x' : 'clock') }}"></i></div></div>
         <div class="kpi-value">{{ (int) $counts->get($st, 0) }}</div>
         <div class="kpi-label">{{ ucfirst($st) }}</div>
       </div>
@@ -31,7 +31,7 @@
           <option value="{{ $s }}" {{ request('status') === $s ? 'selected' : '' }}>{{ ucfirst($s) }}</option>
         @endforeach
       </select>
-      <button class="btn-sm primary" type="submit"><i data-lucide="funnel"></i> Filter</button>
+      <button class="btn-sm primary" type="submit"><i data-lucide="filter"></i> Filter</button>
     </form>
   </section>
 

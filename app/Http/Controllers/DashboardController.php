@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
-        $selectedStation = $this->stationContext($user, $request->integer('station'));
+        $selectedStation = $this->stationContext($user, $request->query('station'));
 
         $data = $this->dashboardService->get(['user' => $user, 'station' => $selectedStation]);
 

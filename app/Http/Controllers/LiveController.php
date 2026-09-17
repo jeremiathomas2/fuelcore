@@ -18,7 +18,7 @@ class LiveController extends Controller
 
         $data = [
             'stations' => $this->visibleStations($user)->orderBy('code')->get(),
-            'selectedStation' => $this->stationContext($user, $request->integer('station')),
+            'selectedStation' => $this->stationContext($user, $request->query('station')),
         ];
 
         return view('live.index', $data);
@@ -33,8 +33,8 @@ class LiveController extends Controller
             ->whereIn('station_id', $stationIds)
             ->with(['station', 'pump', 'fuelProduct']);
 
-        if ($request->integer('station')) {
-            $query->where('station_id', $request->integer('station'));
+        if ($stationId = \App\Support\UrlId::decode($request->query('station'))) {
+            $query->where('station_id', $stationId);
         }
 
         $nozzles = $query->get()->map(fn ($n) => [

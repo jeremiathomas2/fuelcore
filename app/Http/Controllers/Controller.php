@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Station;
 use App\Models\User;
+use App\Support\UrlId;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -22,9 +23,14 @@ abstract class Controller
 
     /**
      * Resolve the station context for the current user / request.
+     *
+     * The requested value is an encrypted URL token (see UrlId); a raw numeric
+     * id is still accepted so internal callers/tests keep working.
      */
-    protected function stationContext(User $user, ?int $requestedId = null): ?Station
+    protected function stationContext(User $user, int|string|null $requested = null): ?Station
     {
+        $requestedId = is_numeric($requested) ? (int) $requested : UrlId::decode($requested);
+
         $visible = fn (int $id): bool => Station::query()->visibleTo($user)->whereKey($id)->exists();
 
         if ($requestedId && $visible($requestedId)) {

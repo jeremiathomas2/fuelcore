@@ -15,7 +15,7 @@
 @endphp
 <aside class="right-panel{{ request()->cookie('fc_right_panel') === '0' ? ' closed' : '' }}" id="rightPanel">
   <div class="panel-section">
-    <div class="panel-section-title"><i data-lucide="bar-chart-2"></i> Today's Snapshot</div>
+    <div class="panel-section-title"><i data-lucide="chart-column"></i> Today's Snapshot</div>
     <div class="mini-stat-grid">
       <div class="mini-stat">
         <div class="label">Today's Revenue</div>
@@ -116,7 +116,7 @@
     <div class="panel-section-title"><i data-lucide="zap"></i> Quick Actions</div>
     <div style="display:flex;flex-direction:column;gap:8px;">
       <a class="btn-sm" href="{{ route('pos') }}" style="justify-content:flex-start;">
-        <i data-lucide="plus-circle"></i> New Sale
+        <i data-lucide="circle-plus"></i> New Sale
       </a>
       @can('delivery.manage')
         <a class="btn-sm" href="{{ route('deliveries.create') }}" style="justify-content:flex-start;">

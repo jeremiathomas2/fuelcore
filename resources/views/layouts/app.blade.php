@@ -57,13 +57,13 @@
   <div class="toast-container" id="toastContainer">
     @if (session('success'))
       <div class="toast success">
-        <i data-lucide="check-circle" style="width:16px;height:16px;flex-shrink:0;"></i>
+        <i data-lucide="circle-check" style="width:16px;height:16px;flex-shrink:0;"></i>
         <span>{{ session('success') }}</span>
       </div>
     @endif
     @if (session('error'))
       <div class="toast error">
-        <i data-lucide="alert-triangle" style="width:16px;height:16px;flex-shrink:0;"></i>
+        <i data-lucide="triangle-alert" style="width:16px;height:16px;flex-shrink:0;"></i>
         <span>{{ session('error') }}</span>
       </div>
     @endif

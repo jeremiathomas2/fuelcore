@@ -10,7 +10,7 @@
       data-confirm-icon="{{ $isActive ? 'archive' : 'rotate-ccw' }}">
   @csrf
   @method('PATCH')
-  <button type="submit" class="action-link" title="{{ $isActive ? 'Archive' : 'Activate' }}">
-    <i data-lucide="{{ $isActive ? 'archive' : 'rotate-ccw' }}"></i>
+  <button type="submit" class="icon-btn" title="{{ $isActive ? 'Archive' : 'Activate' }}">
+    <i data-lucide="{{ $isActive ? 'archive' : 'archive-restore' }}"></i>
   </button>
 </form>

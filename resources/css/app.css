@@ -1628,6 +1628,58 @@ font-family: inherit;
       height: 13px;
     }
 
+    /* ========== SEGMENTED CONTROL ========== */
+    .segment {
+      display: flex;
+      gap: 3px;
+      padding: 3px;
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+    }
+
+    .segment-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border: 1px solid transparent;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .segment-btn:hover {
+      color: var(--accent-blue);
+    }
+
+    .segment-btn i,
+    .segment-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .segment-btn.active {
+      background: var(--white);
+      color: var(--navy-primary);
+      border-color: var(--border-light);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .segment-btn.active i,
+    .segment-btn.active svg {
+      color: var(--accent-blue);
+    }
+
     /* ========== MODAL ========== */
     .modal-overlay {
       position: fixed;
@@ -2020,7 +2072,7 @@ font-family: inherit;
         width: var(--sidebar-width);
       }
 
-      .sidebar.collapsed + .main-area {
+      .sidebar.collapsed ~ .main-area {
         margin-left: 0;
       }
 
@@ -2147,33 +2199,39 @@ font-family: inherit;
     }
 
     /* Sidebar collapsed state (desktop) */
-    .sidebar.collapsed {
-      width: var(--sidebar-collapsed);
-    }
+    @media (min-width: 768px) {
+      .sidebar.collapsed {
+        width: var(--sidebar-collapsed);
+      }
 
-    .sidebar.collapsed .logo-text,
-    .sidebar.collapsed .nav-section-title,
-    .sidebar.collapsed .nav-item .label,
-    .sidebar.collapsed .user-info {
-      display: none;
-    }
+      .sidebar.collapsed .logo-text,
+      .sidebar.collapsed .nav-section-title,
+      .sidebar.collapsed .nav-item .label,
+      .sidebar.collapsed .user-info {
+        display: none;
+      }
 
-    .sidebar.collapsed .nav-item {
-      justify-content: center;
-      padding: 10px;
-    }
+      .sidebar.collapsed .nav-item {
+        justify-content: center;
+        padding: 10px;
+      }
 
-    .sidebar.collapsed .sidebar-header {
-      justify-content: center;
-      padding: 20px 10px 16px;
-    }
+      .sidebar.collapsed .sidebar-header {
+        justify-content: center;
+        padding: 20px 10px 16px;
+      }
 
-    .sidebar.collapsed .user-block {
-      justify-content: center;
-    }
+      .sidebar.collapsed .user-block {
+        justify-content: center;
+      }
 
-    .sidebar.collapsed + .main-area {
-      margin-left: var(--sidebar-collapsed);
+      .sidebar.collapsed ~ .main-area {
+        margin-left: var(--sidebar-collapsed);
+      }
+
+      .sidebar.collapsed .sidebar-collapse {
+        margin-left: 0;
+      }
     }
 
     /* Sidebar collapse control */

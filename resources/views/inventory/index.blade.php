@@ -24,7 +24,7 @@
 
   @if ($lowStock->isNotEmpty())
     <div class="alert-box alert-error" style="margin-bottom:24px;">
-      <i data-lucide="alert-triangle"></i>
+      <i data-lucide="triangle-alert"></i>
       <div>
         <strong>Low stock warnings:</strong>
         <ul style="margin:6px 0 0 16px;padding:0;">

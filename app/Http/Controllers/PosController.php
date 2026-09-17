@@ -22,7 +22,7 @@ class PosController extends Controller
         abort_unless(Gate::allows('pos.use'), 403);
 
         $user = $request->user();
-        $station = $this->stationContext($user, $request->integer('station'));
+        $station = $this->stationContext($user, $request->query('station'));
 
         $products = FuelProduct::where('active', true)->orderBy('name')->get();
         $nozzles = Nozzle::query()
@@ -107,7 +107,7 @@ class PosController extends Controller
         try {
             $transaction = app(FuelSaleService::class)->create($data, $request->user());
 
-            return redirect()->route('pos', ['station' => $data['station_id']])
+            return redirect()->route('pos', ['station' => url_id($data['station_id'])])
                 ->with('success', "Sale {$transaction->transaction_number} completed — " . number_format((float) $transaction->net_amount, 0) . ' ' . currency() . '.')
                 ->with('receipt_number', $transaction->transaction_number);
         } catch (\InvalidArgumentException $e) {

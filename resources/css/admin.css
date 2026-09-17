@@ -90,6 +90,7 @@
 
 .icon-btn:hover { color: var(--navy-primary); border-color: var(--navy-primary); background: #F1F5F9; }
 .icon-btn.danger:hover { color: var(--danger-red); border-color: var(--danger-red); background: #FDECEC; }
+.icon-btn.success:hover { color: var(--success-green); border-color: var(--success-green); background: #E7F7F1; }
 
 /* ---------- Page scaffolding ---------- */
 .page-section { margin-bottom: 28px; }
