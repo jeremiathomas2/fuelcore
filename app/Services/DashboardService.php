@@ -28,14 +28,18 @@ class DashboardService
         $todayEnd = $now->copy()->endOfDay();
         $sevenDaysAgo = $now->copy()->subDays(6)->startOfDay();
         $user = $options['user'] ?? null;
+        $selectedStation = $options['station'] ?? null;
 
         $stationQuery = Station::query();
         if ($user) {
             $stationQuery->visibleTo($user);
         }
-        $stationIds = $stationQuery->pluck('id');
+        if ($selectedStation) {
+            $stationQuery->whereKey($selectedStation->id);
+        }
+        $stationIds = (clone $stationQuery)->pluck('id');
 
-        $stationCounts = Station::query()
+        $stationCounts = (clone $stationQuery)
             ->selectRaw('status, count(*) as count')
             ->groupBy('status')
             ->pluck('count', 'status')

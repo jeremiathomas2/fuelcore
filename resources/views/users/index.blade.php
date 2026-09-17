@@ -56,9 +56,9 @@
                 <td><span class="status-pill-sm {{ $u->status === 'active' ? 'online' : 'warning' }}">{{ $u->status }}</span></td>
                 <td class="center">
                   <div class="action-links">
-                    <a href="{{ route('users.show', $u) }}" title="View"><i data-lucide="eye"></i></a>
+                    <a href="{{ route('users.show', $u) }}" class="icon-btn" title="View user" onclick="event.stopPropagation()"><i data-lucide="eye"></i></a>
                     @can('user.manage')
-                      <a href="{{ route('users.edit', $u) }}" title="Edit"><i data-lucide="pencil"></i></a>
+                      <a href="{{ route('users.edit', $u) }}" class="icon-btn" title="Edit user" onclick="event.stopPropagation()"><i data-lucide="pencil"></i></a>
                       <form method="POST" action="{{ route('users.toggleStatus', $u) }}" style="display:inline;" onclick="event.stopPropagation()">
                         @csrf
                         @method('PATCH')

@@ -27,6 +27,7 @@ class PosController extends Controller
         $products = FuelProduct::where('active', true)->orderBy('name')->get();
         $nozzles = Nozzle::query()
             ->whereIn('station_id', $this->visibleStations($user)->pluck('id'))
+            ->when($station, fn ($q) => $q->where('station_id', $station->id))
             ->with(['pump', 'fuelProduct'])
             ->where('status', '!=', 'offline')
             ->get();

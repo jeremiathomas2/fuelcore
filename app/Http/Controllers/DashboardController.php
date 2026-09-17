@@ -17,10 +17,11 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
-        $data = $this->dashboardService->get(['user' => $user]);
+        $selectedStation = $this->stationContext($user, $request->integer('station'));
+
+        $data = $this->dashboardService->get(['user' => $user, 'station' => $selectedStation]);
 
         $stations = $this->visibleStations($user)->orderBy('code')->get();
-        $selectedStation = $this->stationContext($user, $request->integer('station'));
 
         return view('dashboard', array_merge($data, [
             'stations' => $stations,

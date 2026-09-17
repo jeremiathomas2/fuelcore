@@ -10,7 +10,7 @@
     <div class="page-actions">
       @if (in_array($delivery->status, ['scheduled', 'in_transit', 'receiving']))
         @can('delivery.manage')
-          <form method="POST" action="{{ route('deliveries.cancel', $delivery) }}" class="d-inline"
+          <form method="POST" action="{{ route('deliveries.cancel', $delivery) }}" class="d-inline" data-turbo="false"
                 data-confirm="Cancel delivery {{ $delivery->delivery_number }}? This cannot be undone."
                 data-confirm-title="Cancel delivery" data-confirm-ok="Cancel delivery" data-confirm-icon="ban">
             @csrf

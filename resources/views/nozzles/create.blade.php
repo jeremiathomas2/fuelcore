@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('active', 'nozzles')
+@section('active', 'pumps')
 @section('page_title', 'Add Nozzle')
 @section('page_breadcrumb', 'FUELCORE / Nozzles / Add')
 

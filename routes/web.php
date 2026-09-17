@@ -25,6 +25,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\StationController;
+use App\Http\Controllers\StationSwitchController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TankController;
@@ -77,6 +78,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/stations/{station}/edit', [StationController::class, 'edit'])->name('stations.edit')->whereNumber('station');
         Route::put('/stations/{station}', [StationController::class, 'update'])->name('stations.update')->whereNumber('station');
     });
+    Route::post('/stations/switch', [StationSwitchController::class, 'update'])->name('stations.switch');
 
     /* ---------- Pumps & Nozzles ---------- */
     Route::middleware('permission:pump.view')->group(function () {
@@ -240,6 +242,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/alerts/{alert}/resolve', [AlertController::class, 'resolve'])->name('alerts.resolve');
     });
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/feed', [NotificationController::class, 'feed'])->name('notifications.feed');
     Route::patch('/notifications/{notification}/read', [NotificationController::class, 'markRead'])->name('notifications.read');
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.readAll');
 

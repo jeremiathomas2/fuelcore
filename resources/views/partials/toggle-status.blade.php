@@ -3,7 +3,7 @@
   $noun = $noun ?? 'record';
   $label = $label ?? $noun;
 @endphp
-<form method="POST" action="{{ $action }}" class="d-inline" onclick="event.stopPropagation();"
+<form method="POST" action="{{ $action }}" class="d-inline" onclick="event.stopPropagation();" data-turbo="false"
       data-confirm="{{ $isActive ? 'Archive' : 'Activate' }} {{ $label }}?"
       data-confirm-title="{{ $isActive ? 'Archive' : 'Activate' }} {{ ucfirst($noun) }}"
       data-confirm-ok="{{ $isActive ? 'Archive' : 'Activate' }}"

@@ -1,3 +1,11 @@
+@php
+  $sectionActive = trim((string) $__env->yieldContent('active', ''));
+  $sectionTitle = trim((string) $__env->yieldContent('page_title', ''));
+  $sectionBreadcrumb = trim((string) $__env->yieldContent('page_breadcrumb', ''));
+  $active = $sectionActive !== '' ? $sectionActive : ($active ?? '');
+  $page_title = $sectionTitle !== '' ? $sectionTitle : ($page_title ?? 'Dashboard');
+  $page_breadcrumb = $sectionBreadcrumb !== '' ? $sectionBreadcrumb : ($page_breadcrumb ?? 'FUELCORE');
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,17 +19,10 @@
   @vite(['resources/css/app.css', 'resources/css/admin.css', 'resources/js/app.js'])
   @stack('head')
 </head>
-<body data-currency="{{ currency() }}">
+<body data-currency="{{ currency() }}" data-active-section="{{ $active }}">
   <div class="app">
-    @php
-      $sectionActive = trim((string) $__env->yieldContent('active', ''));
-      $sectionTitle = trim((string) $__env->yieldContent('page_title', ''));
-      $sectionBreadcrumb = trim((string) $__env->yieldContent('page_breadcrumb', ''));
-      $active = $sectionActive !== '' ? $sectionActive : ($active ?? '');
-      $page_title = $sectionTitle !== '' ? $sectionTitle : ($page_title ?? 'Dashboard');
-      $page_breadcrumb = $sectionBreadcrumb !== '' ? $sectionBreadcrumb : ($page_breadcrumb ?? 'FUELCORE');
-    @endphp
     @include('partials.sidebar')
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- ========== MAIN AREA ========== -->
     <div class="main-area" id="mainArea">

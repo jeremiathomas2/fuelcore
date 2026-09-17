@@ -11,10 +11,16 @@ const CURRENCY = document.body.dataset.currency || '';
 Chart.defaults.font.family = BASE.font;
 Chart.defaults.color = BASE.color;
 
-document.addEventListener('DOMContentLoaded', () => {
+/* Turbo swaps the DOM on navigation, so charts must be (re)built whenever a
+   new canvas appears. The WeakSet makes initialisation idempotent per canvas
+   element, which also prevents a double-run on the first page load. */
+const initialized = new WeakSet();
+
+function initCharts() {
   /* Primary sales trend chart */
   const primary = document.getElementById('salesChart');
-  if (primary && primary.dataset.labels) {
+  if (primary && primary.dataset.labels && !initialized.has(primary)) {
+    initialized.add(primary);
     const labels = JSON.parse(primary.dataset.labels);
     const values = JSON.parse(primary.dataset.values).map(Number);
 
@@ -69,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Payment method donut */
   const donut = document.getElementById('paymentChart');
-  if (donut && donut.dataset.labels) {
+  if (donut && donut.dataset.labels && !initialized.has(donut)) {
+    initialized.add(donut);
     new Chart(donut, {
       type: 'doughnut',
       data: {
@@ -92,7 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Top stations bar */
   const stations = document.getElementById('stationChart');
-  if (stations && stations.dataset.labels) {
+  if (stations && stations.dataset.labels && !initialized.has(stations)) {
+    initialized.add(stations);
     new Chart(stations, {
       type: 'bar',
       data: {
@@ -117,4 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
       },
     });
   }
-});
+}
+
+const KEY = '__fcInit_charts';
+if (window[KEY]) document.removeEventListener('turbo:load', window[KEY]);
+window[KEY] = initCharts;
+document.addEventListener('turbo:load', initCharts);
+
+/* First load: this module executes after parsing, so canvases are present. */
+initCharts();

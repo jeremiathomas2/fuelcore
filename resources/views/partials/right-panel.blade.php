@@ -13,7 +13,7 @@
     $rpDieselPct = round($rpDiesel / $rpMaxFuel * 100);
     $rpPetrolPct = round($rpPetrol / $rpMaxFuel * 100);
 @endphp
-<aside class="right-panel" id="rightPanel">
+<aside class="right-panel{{ request()->cookie('fc_right_panel') === '0' ? ' closed' : '' }}" id="rightPanel">
   <div class="panel-section">
     <div class="panel-section-title"><i data-lucide="bar-chart-2"></i> Today's Snapshot</div>
     <div class="mini-stat-grid">

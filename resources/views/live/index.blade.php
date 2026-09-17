@@ -43,44 +43,54 @@
 
 @push('scripts')
   <script>
-    const LIVE_URL = '{{ route('live.data', ['station' => $selectedStation?->id ?? '']) }}';
-    const TSh = '{{ currency() }}';
-    const statusBadge = (s) => {
-      const cls = s === 'dispensing' ? 'dispensing' : ['idle','completed'].includes(s) ? 'online' : 'warning';
-      return `<span class="nozzle-status ${cls}"><span class="status-dot"></span>${s}</span>`;
-    };
-    async function loadLive() {
-      try {
-        const res = await fetch(LIVE_URL, { headers: { 'Accept': 'application/json' } });
-        const data = await res.json();
-        document.getElementById('liveClock').textContent = 'Stream update: ' + data.now;
-        const grid = document.getElementById('nozzleGrid');
-        if (!data.nozzles.length) {
-          grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">No nozzle telemetry available.</div>';
-        } else {
-          grid.innerHTML = data.nozzles.map((n) => `
-            <div class="nozzle-card">
-              <div class="nozzle-header">
-                <span class="nozzle-id">${n.station} · Pump ${n.pump} · Nozzle ${n.number}</span>
-                ${statusBadge(n.status)}
-              </div>
-              <div class="nozzle-values">
-                <div class="nozzle-value-item"><span class="val">${Number(n.price||0).toLocaleString()}</span><span class="label">${TSh}/L</span></div>
-                <div class="nozzle-value-item"><span class="val">${n.litres.toLocaleString()}</span><span class="label">Total L</span></div>
-              </div>
-              <div class="nozzle-status-row">
-                <span class="fuel-badge petrol">${n.fuel}</span>
-              </div>
-            </div>`).join('');
+    (() => {
+      const KEY = '__fcInit_live';
+      if (window[KEY]) document.removeEventListener('turbo:load', window[KEY]);
+      const LIVE_URL = '{{ route('live.data', ['station' => $selectedStation?->id ?? '']) }}';
+      const TSh = '{{ currency() }}';
+      const statusBadge = (s) => {
+        const cls = s === 'dispensing' ? 'dispensing' : ['idle','completed'].includes(s) ? 'online' : 'warning';
+        return `<span class="nozzle-status ${cls}"><span class="status-dot"></span>${s}</span>`;
+      };
+      async function loadLive() {
+        try {
+          const res = await fetch(LIVE_URL, { headers: { 'Accept': 'application/json' } });
+          const data = await res.json();
+          const clock = document.getElementById('liveClock');
+          if (clock) clock.textContent = 'Stream update: ' + data.now;
+          const grid = document.getElementById('nozzleGrid');
+          if (!grid) return;
+          if (!data.nozzles.length) {
+            grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">No nozzle telemetry available.</div>';
+          } else {
+            grid.innerHTML = data.nozzles.map((n) => `
+              <div class="nozzle-card">
+                <div class="nozzle-header">
+                  <span class="nozzle-id">${n.station} · Pump ${n.pump} · Nozzle ${n.number}</span>
+                  ${statusBadge(n.status)}
+                </div>
+                <div class="nozzle-values">
+                  <div class="nozzle-value-item"><span class="val">${Number(n.price||0).toLocaleString()}</span><span class="label">${TSh}/L</span></div>
+                  <div class="nozzle-value-item"><span class="val">${n.litres.toLocaleString()}</span><span class="label">Total L</span></div>
+                </div>
+                <div class="nozzle-status-row">
+                  <span class="fuel-badge petrol">${n.fuel}</span>
+                </div>
+              </div>`).join('');
+          }
+        } catch (e) {
+          /* silent */
         }
-      } catch (e) {
-        /* silent */
       }
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      loadLive();
-      setInterval(loadLive, 5000);
-      document.getElementById('refreshLive').addEventListener('click', loadLive);
-    });
+      window[KEY] = () => {
+        if (!document.getElementById('nozzleGrid')) return;
+        if (window.__fcLiveTimer) clearInterval(window.__fcLiveTimer);
+        loadLive();
+        window.__fcLiveTimer = setInterval(loadLive, 5000);
+        const refresh = document.getElementById('refreshLive');
+        if (refresh) refresh.addEventListener('click', loadLive);
+      };
+      document.addEventListener('turbo:load', window[KEY]);
+    })();
   </script>
 @endpush

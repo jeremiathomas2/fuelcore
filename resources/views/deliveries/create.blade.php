@@ -114,7 +114,11 @@
     ])->values();
   @endphp
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (() => {
+      const KEY = '__fcInit_deliveryCreate';
+      if (window[KEY]) document.removeEventListener('turbo:load', window[KEY]);
+      window[KEY] = () => {
+      if (!document.getElementById('addItem')) return;
       let ri = 1;
       const wrap = document.getElementById('itemsWrap');
       const products = @json($productOptions);
@@ -140,6 +144,8 @@
       document.addEventListener('click', (e) => {
         if (e.target.classList.contains('remove-item')) e.target.closest('.item-row').remove();
       });
-    });
+      };
+      document.addEventListener('turbo:load', window[KEY]);
+    })();
   </script>
 @endpush

@@ -61,7 +61,11 @@
 
 @push('scripts')
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (() => {
+      const KEY = '__fcInit_paymentCreate';
+      if (window[KEY]) document.removeEventListener('turbo:load', window[KEY]);
+      window[KEY] = () => {
+      if (!document.getElementById('customerSelect')) return;
       const sel = document.getElementById('customerSelect');
       const info = document.getElementById('balanceInfo');
       const amtInput = document.querySelector('input[name="amount"]');
@@ -77,6 +81,8 @@
       };
       sel.addEventListener('change', showBalance);
       showBalance();
-    });
+      };
+      document.addEventListener('turbo:load', window[KEY]);
+    })();
   </script>
 @endpush

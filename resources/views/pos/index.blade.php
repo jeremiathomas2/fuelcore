@@ -166,7 +166,11 @@
 
 @push('scripts')
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (() => {
+      const KEY = '__fcInit_pos';
+      if (window[KEY]) document.removeEventListener('turbo:load', window[KEY]);
+      window[KEY] = () => {
+      if (!document.getElementById('litresInput')) return;
       const $ = (s) => document.querySelector(s);
       let fuelType = 'volume';
       let price = 0;
@@ -247,6 +251,8 @@
       });
 
       setInputVisibility();
-    });
+      };
+      document.addEventListener('turbo:load', window[KEY]);
+    })();
   </script>
 @endpush

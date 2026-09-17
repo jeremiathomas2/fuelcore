@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('active', 'sales')
+@section('active', 'pos')
 @section('page_title', 'Fuel Sales')
 @section('page_breadcrumb', 'FUELCORE / Sales')
 
@@ -125,7 +125,11 @@
 
 @push('scripts')
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (() => {
+      const KEY = '__fcInit_sales';
+      if (window[KEY]) document.removeEventListener('turbo:load', window[KEY]);
+      window[KEY] = () => {
+      if (!document.getElementById('voidModal')) return;
       const openModal = (id) => {
         const el = document.getElementById(id);
         if (window.FcModal?.open) { window.FcModal.open(id); } else { el.classList.add('open'); }
@@ -175,6 +179,8 @@
 
       document.querySelectorAll('.modal-close').forEach((b) => b.addEventListener('click', () => closeModal(b.closest('.modal-overlay').id)));
       document.querySelectorAll('.modal-overlay').forEach((o) => o.addEventListener('click', (e) => { if (e.target === o) closeModal(o.id); }));
-    });
+      };
+      document.addEventListener('turbo:load', window[KEY]);
+    })();
   </script>
 @endpush

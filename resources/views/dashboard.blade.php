@@ -435,33 +435,39 @@
 @push('scripts')
   @vite('resources/js/charts.js')
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('tr[data-txn]').forEach((tr) => {
-        tr.addEventListener('click', async () => {
-          const url = tr.dataset.txn;
-          const body = document.getElementById('txnModalBody');
-          if (!url) return;
-          try {
-            const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-            const t = await res.json();
-            const fmt = (v) => Number(v || 0).toLocaleString('en', { maximumFractionDigits: 2 });
-            document.getElementById('txnModal').classList.add('open');
-            body.innerHTML = `
-              <div class="detail-list">
-                <div class="detail-item"><div class="dt">Receipt</div><div class="dd mono">${t.transaction_number || ''}</div></div>
-                <div class="detail-item"><div class="dt">Station</div><div class="dd">${t.station?.name || ''}</div></div>
-                <div class="detail-item"><div class="dt">Fuel</div><div class="dd">${t.fuel_product?.name || ''}</div></div>
-                <div class="detail-item"><div class="dt">Litres</div><div class="dd">${fmt(t.litres)} L</div></div>
-                <div class="detail-item"><div class="dt">Amount</div><div class="dd">{{ currency() }} ${fmt(t.net_amount)}</div></div>
-                <div class="detail-item"><div class="dt">Payment</div><div class="dd">${(t.payment?.method || 'cash')}</div></div>
-                <div class="detail-item"><div class="dt">Attendant</div><div class="dd">${t.attendant?.name || '-'}</div></div>
-                <div class="detail-item"><div class="dt">Time</div><div class="dd">${t.transacted_at ? new Date(t.transacted_at).toLocaleString() : ''}</div></div>
-              </div>`;
-          } catch (e) {
-            body.innerHTML = '<div class="empty-state">Could not load transaction.</div>';
-          }
+    (() => {
+      const KEY = '__fcInit_dashboard';
+      if (window[KEY]) document.removeEventListener('turbo:load', window[KEY]);
+      window[KEY] = () => {
+        if (!document.getElementById('txnModalBody')) return;
+        document.querySelectorAll('tr[data-txn]').forEach((tr) => {
+          tr.addEventListener('click', async () => {
+            const url = tr.dataset.txn;
+            const body = document.getElementById('txnModalBody');
+            if (!url) return;
+            try {
+              const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+              const t = await res.json();
+              const fmt = (v) => Number(v || 0).toLocaleString('en', { maximumFractionDigits: 2 });
+              document.getElementById('txnModal').classList.add('open');
+              body.innerHTML = `
+                <div class="detail-list">
+                  <div class="detail-item"><div class="dt">Receipt</div><div class="dd mono">${t.transaction_number || ''}</div></div>
+                  <div class="detail-item"><div class="dt">Station</div><div class="dd">${t.station?.name || ''}</div></div>
+                  <div class="detail-item"><div class="dt">Fuel</div><div class="dd">${t.fuel_product?.name || ''}</div></div>
+                  <div class="detail-item"><div class="dt">Litres</div><div class="dd">${fmt(t.litres)} L</div></div>
+                  <div class="detail-item"><div class="dt">Amount</div><div class="dd">{{ currency() }} ${fmt(t.net_amount)}</div></div>
+                  <div class="detail-item"><div class="dt">Payment</div><div class="dd">${(t.payment?.method || 'cash')}</div></div>
+                  <div class="detail-item"><div class="dt">Attendant</div><div class="dd">${t.attendant?.name || '-'}</div></div>
+                  <div class="detail-item"><div class="dt">Time</div><div class="dd">${t.transacted_at ? new Date(t.transacted_at).toLocaleString() : ''}</div></div>
+                </div>`;
+            } catch (e) {
+              body.innerHTML = '<div class="empty-state">Could not load transaction.</div>';
+            }
+          });
         });
-      });
-    });
+      };
+      document.addEventListener('turbo:load', window[KEY]);
+    })();
   </script>
 @endpush

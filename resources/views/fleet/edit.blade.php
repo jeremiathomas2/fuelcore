@@ -102,7 +102,11 @@
 
 @push('scripts')
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    (() => {
+      const KEY = '__fcInit_fleetEdit';
+      if (window[KEY]) document.removeEventListener('turbo:load', window[KEY]);
+      window[KEY] = () => {
+      if (!document.getElementById('addVehicle')) return;
       let vi = {{ max($account->vehicles->count(), 1) }};
       document.getElementById('addVehicle').addEventListener('click', () => {
         const wrap = document.getElementById('vehiclesWrap');
@@ -121,6 +125,8 @@
       document.addEventListener('click', (e) => {
         if (e.target.classList.contains('remove-vehicle')) e.target.closest('.vehicle-row').remove();
       });
-    });
+      };
+      document.addEventListener('turbo:load', window[KEY]);
+    })();
   </script>
 @endpush

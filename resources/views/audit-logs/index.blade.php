@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('active', 'audit-logs')
+@section('active', 'audit')
 @section('page_title', 'Audit Logs')
 @section('page_breadcrumb', 'FUELCORE / Audit Logs')
 

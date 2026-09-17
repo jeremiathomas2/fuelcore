@@ -25,11 +25,19 @@ abstract class Controller
      */
     protected function stationContext(User $user, ?int $requestedId = null): ?Station
     {
-        if ($requestedId && Station::query()->visibleTo($user)->whereKey($requestedId)->exists()) {
+        $visible = fn (int $id): bool => Station::query()->visibleTo($user)->whereKey($id)->exists();
+
+        if ($requestedId && $visible($requestedId)) {
             return Station::find($requestedId);
         }
 
-        if ($user->station_id && Station::query()->visibleTo($user)->whereKey($user->station_id)->exists()) {
+        $sessionId = (int) session('active_station');
+
+        if ($sessionId && $visible($sessionId)) {
+            return Station::find($sessionId);
+        }
+
+        if ($user->station_id && $visible($user->station_id)) {
             return Station::find($user->station_id);
         }
 
